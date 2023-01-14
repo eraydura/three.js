@@ -20,7 +20,7 @@
 		<script type="module">
                         import * as THREE from 'three';
                         import {OrbitControls} from 'https://unpkg.com/browse/three@0.148.0/examples/jsm/controls/OrbitControls.js';
-                        import {glTFLoader} from 'https://unpkg.com/browse/three@0.148.0/examples/jsm/loaders/GLTFLoader.js';
+                        import {GLTFLoader} from 'https://unpkg.com/browse/three@0.148.0/examples/jsm/loaders/GLTFLoader.js';
 
                          //Scene Renderer
 			const scene = new THREE.Scene();
@@ -45,7 +45,7 @@
                         camera.update();
 			
 			//load GTLF
-			const loader= new glTFLoader();
+			const loader= new GLTFLoader();
 			loader.load('models/armchair.glb',function(gltf){
 				const model= gltf.scene;
 				model.positionset(0,0,0,0);
