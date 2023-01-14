@@ -18,9 +18,9 @@
                        }
                  </script>
 		<script>
-                         import * as THREE from 'three';
-                         import {OrbitControls} from 'https://unpkg.com/browse/three@0.77.0/examples/js/controls/OrbitControls.js';
-                         import {glTFLoader} from 'https://unpkg.com/browse/three@0.77.0/examples/js/loaders/gltf/glTFLoader.js';
+                        import * as THREE from 'three';
+                        import {OrbitControls} from 'https://unpkg.com/browse/three@0.77.0/examples/js/controls/OrbitControls.js';
+                        import {glTFLoader} from 'https://unpkg.com/browse/three@0.77.0/examples/js/loaders/gltf/glTFLoader.js';
 
                          //Scene Renderer
 			const scene = new THREE.Scene();
@@ -28,21 +28,33 @@
 			const renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
-                         scene.background=new THREE.Color(0x000000);
+                        scene.background=new THREE.Color(0x000000);
 
-                         //Our object to our camera
-                         const camera= new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight,0.1,1000);
-                         camera.position.set(5,5,2.5);
+                        //Our object to our camera
+                        const camera= new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight,0.1,1000);
+                        camera.position.set(5,5,2.5);
 
-                         //ambient light
-                         const ambientcolor= new THREE.AmbientLight(0xffffff);
-                         scene.add(ambientcolor);
+                        //ambient light
+                        const ambientcolor= new THREE.AmbientLight(0xffffff);
+                        scene.add(ambientcolor);
                          
-                         //controls for orbiting around the object
-                         const controls= new OrbitControls(camera, renderer.domElement);
-                         controls.addEventListener('change', () => {renderer.render(scene, camera)});
-                         controls.target.set(0,0,0);
-                         camera.update();
+                        //controls for orbiting around the object
+                        const controls= new OrbitControls(camera, renderer.domElement);
+                        controls.addEventListener('change', () => {renderer.render(scene, camera)});
+                        controls.target.set(0,0,0);
+                        camera.update();
+			
+			//load GTLF
+			const loader= new glTFLoader();
+			loader.load('models/armchair.glb',function(gltf){
+				const model= gltf.scene;
+				model.positionset(0,0,0,0);
+				scene.add(model);
+				renderer.render(scene, camera);
+			}, undefined,function(error){
+				console.error(error);
+			})
+			
 		</script>
 	</body>
 </html>
