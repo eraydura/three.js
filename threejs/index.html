@@ -2,38 +2,47 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>My first three.js app</title>
 		<style>
 			body { margin: 0; }
 		</style>
 	</head>
 	<body>
-		<script src="js/three.js"></script>
+                 <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+
+                  <script type="importmap">
+                       {
+                         "imports": {
+                            "three": "https://unpkg.com/browse/three@0.77.0/three.min.js"
+                          }
+                       }
+                 </script>
 		<script>
+                         import * as THREE from 'three';
+                         import {OrbitControls} from 'https://unpkg.com/browse/three@0.77.0/examples/js/controls/OrbitControls.js';
+                         import {glTFLoader} from 'https://unpkg.com/browse/three@0.77.0/examples/js/loaders/gltf/glTFLoader.js';
+
+                         //Scene Renderer
 			const scene = new THREE.Scene();
 			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
 			const renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
+                         scene.background=new THREE.Color(0x000000);
 
-			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			const cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
+                         //Our object to our camera
+                         const camera= new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight,0.1,1000);
+                         camera.position.set(5,5,2.5);
 
-			camera.position.z = 5;
-
-			function animate() {
-				requestAnimationFrame( animate );
-
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
-
-				renderer.render( scene, camera );
-			};
-
-			animate();
+                         //ambient light
+                         const ambientcolor= new THREE.AmbientLight(0xffffff);
+                         scene.add(ambientcolor);
+                         
+                         //controls for orbiting around the object
+                         const controls= new OrbitControls(camera, renderer.domElement);
+                         controls.addEventListener('change', () => {renderer.render(scene, camera)});
+                         controls.target.set(0,0,0);
+                         camera.update();
 		</script>
 	</body>
 </html>
