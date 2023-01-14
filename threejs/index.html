@@ -46,7 +46,7 @@
 			
 			//load GTLF
 			const loader= new GLTFLoader();
-			loader.load('models/armchair.glb',function(gltf){
+			loader.load('models/armchair.gltf',function(gltf){
 				const model= gltf.scene;
 				model.positionset(0,0,0,0);
 				scene.add(model);
